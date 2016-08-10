@@ -15,8 +15,8 @@ app.set('view engine', 'jade');
 //routes
 app.get('/login', loginController.login);
 
-app.listen(3001, function() {
-  console.log('listening on 3001')
+app.listen(3002, "0.0.0.0", function() {
+  console.log('listening on 3002')
 })
 
 app.get('/', function(req, res) {
