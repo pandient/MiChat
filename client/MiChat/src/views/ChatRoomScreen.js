@@ -33,7 +33,10 @@ class ChatRoomScreen extends Component {
                     <ListView
                         dataSource={this.state.dataSource}
                         renderRow={(rowData) =>
-                            <TouchableHighlight >
+                            <TouchableHighlight
+                                underlayColor='green'
+                            onPress={() => {}}
+                            >
                                 <View style={styles.listItem}>
                                     <View style={styles.listInfo}>
                                         <Text style={styles.roomLabel}>{rowData}</Text>
@@ -46,7 +49,6 @@ class ChatRoomScreen extends Component {
         )
     }
 }
-
 
 var styles = StyleSheet.create({
     container: {
@@ -67,7 +69,9 @@ var styles = StyleSheet.create({
         backgroundColor: '#f7f8fc',
         borderBottomWidth: 0.5,
         borderColor: '#D0DBE4',
-        padding: 5
+        padding: 5,
+        paddingTop: 15,
+        paddingBottom: 15
     },
     listInfo: {
         flex: 1,

@@ -15,14 +15,31 @@ import {connect} from 'react-redux'
 import {Actions as NavActions} from 'react-native-router-flux'
 import Button from 'apsl-react-native-button'
 import Colors from '../config/Colors'
+import API from '../api/Api'
 
 class LoginScreen extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
-            username: 'test@ze.com',
+            username: 'admin',
             password: 'password',
+            userID: null
+        };
+        this.api = API.create()
+    }
+
+    handleLoginPress() {
+        const {username, password} = this.state
+        this.api.logIn(username, password).then(this.setUserID.bind(this));
+    }
+
+    setUserID(response) {
+        if (response.data.userid != null) {
+            this.setState({
+                userID: response.data.userid,
+            })
+            NavActions.chatRoomScreen
         }
     }
 
@@ -31,14 +48,17 @@ class LoginScreen extends Component {
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.content}>
+                    <Text>{this.state.userID}</Text>
                     <TextInput
                         placeholder='Username'
+                        defaultValue='admin'
                         style={styles.textInputStyle}
                         onChangeText={(text) => this.setState({username: text})}
                         value={this.state.text}
                     />
                     <TextInput
                         placeholder='Password'
+                        defaultValue='password'
                         style={styles.textInputStyle}
                         onChangeText={(text) => this.setState({password: text})}
                         value={this.state.text}
@@ -47,13 +67,11 @@ class LoginScreen extends Component {
                         background={TouchableNativeFeedback.Ripple('#000000')}
                         style={styles.buttonStyle}
                         textStyle={styles.textStyle}
-                        onPress={() => {
-                            console.log('Login pressed')
-                        }}>
+                        onPress={this.handleLoginPress.bind(this)}>
                         Login
                     </Button>
                 </View>
-            </ScrollView >
+            </ScrollView>
         )
     }
 }
