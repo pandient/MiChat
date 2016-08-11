@@ -8,12 +8,3 @@ exports.getApi = (req, res) => {
     title: 'API Examples'
   });
 };
-
-
-exports.tony = (req, res) => {
-  // microservice
-  // repond
-  res.json( {
-    title: 'API Examples'
-  });
-};

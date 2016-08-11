@@ -2,10 +2,20 @@
 
 
 exports.login = (req, res) => {
-  // return an id according to request params, else null
-  res.json( {
-    userid: 5
+  var userName = req.param('userName');
+  var password = req.param('password');
+  //console.log("login from microservice");
+  console.log(userName + " " + password);
+ // console.log(req);
+  if(userName === 'admin' && password === 'password'){
+    res.json( {
+    userid: 'f3fsdf242f'
   });
+  }else {
+     res.json( {
+    message: 'please specify valid credentials'
+  });
+  }
 };
 
 exports.listOfRooms = (req, res) => {
@@ -21,3 +31,5 @@ exports.roomInfo = (req, res) => {
     roomName: "test"
   });
 };
+
+

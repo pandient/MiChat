@@ -26,3 +26,31 @@ app.get('/', function(req, res) {
 })
 
 module.exports = app;
+
+//register service to service registry sometime
+const querystring = require('querystring');
+const http = require("http");
+var postData = querystring.stringify({
+	"name": "loginservices",
+	"host": "10.0.9.30",
+	"port": "3002"
+});
+var options = {
+	hostname: "10.0.9.30",
+	port: 3001,
+	method: "POST",
+	path: "/add",
+	headers: {
+		'Content-Type': 'application/x-www-form-urlencoded',
+		'Content-Length': Buffer.byteLength(postData)
+	}
+};
+var req = http.request(options, function(response) {
+	console.log("ok, i've told the service registry");
+});
+
+req.on('error', function(err) {
+	console.log("problem with adding to service registry");
+});
+req.write(postData);
+req.end();

@@ -6,6 +6,7 @@ const logger = require('morgan');
 
 const apiController = require('./controllers/api');
 const loginController = require('./controllers/login');
+const chatController = require('./controllers/chat');
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -15,6 +16,8 @@ app.set('view engine', 'jade');
 
 app.get('/api', apiController.getApi);
 app.post('/login', loginController.login);
+app.post('/sendMessage', chatController.sendMessage);
+app.get('/getMessages', chatController.getMessages)
 
 app.listen(3000, function() {
   console.log('main service listening on 3000')
