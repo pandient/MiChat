@@ -4,25 +4,26 @@ const app = express();
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
-//controller refs
-const loginController = require('./controllers/login');
+const servicesController = require('./controllers/services');
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'jade');
 
-//routes
-app.get('/login', loginController.login);
-app.get('/listofrooms', loginController.listOfRooms);
-app.get('/roominfo', loginController.roomInfo);
+app.get('/find', servicesController.find);
+app.post('/add', servicesController.add);
+app.post('/remove', servicesController.remove);
 
-app.listen(3002, "0.0.0.0", function() {
-  console.log('listening on 3002')
+app.listen(3000, function() {
+  console.log('main service listening on 3000')
 })
 
 app.get('/', function(req, res) {
-  res.send('Hello World')
+  res.send('this is the service registry listening')
 })
+
+
 
 module.exports = app;
