@@ -4,27 +4,23 @@ const app = express();
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 
-const apiController = require('./controllers/api');
-const loginController = require('./controllers/login');
-const chatController = require('./controllers/chat');
+const servicesController = require('./controllers/services');
+
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'jade');
 
-
-app.get('/api', apiController.getApi);
-app.post('/login', loginController.login);
 app.post('/sendMessage', chatController.sendMessage);
 app.get('/getMessages', chatController.getMessages)
 
-app.listen(3000, function() {
-  console.log('main service listening on 3000')
+app.listen(3005, function() {
+  console.log('chat registry listening on 3005')
 })
 
 app.get('/', function(req, res) {
-  res.send('this is the main service listing')
+  res.send('this is the chat registry listening')
 })
 
 
