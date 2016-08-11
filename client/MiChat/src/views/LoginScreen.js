@@ -2,16 +2,10 @@ import React, {Component} from 'react'
 import {
     View,
     ScrollView,
-    Text,
     TextInput,
-    TouchableOpacity,
-    Image,
-    Keyboard,
-    LayoutAnimation,
     StyleSheet,
     TouchableNativeFeedback
 } from 'react-native'
-import {connect} from 'react-redux'
 import {Actions as NavActions} from 'react-native-router-flux'
 import Button from 'apsl-react-native-button'
 import Colors from '../config/Colors'
@@ -38,17 +32,15 @@ class LoginScreen extends Component {
         if (response.data.userid != null) {
             this.setState({
                 userID: response.data.userid,
-            })
-            NavActions.chatRoomScreen
+            });
+            NavActions.chatRoomScreen(this.state.userID)
         }
     }
 
     render() {
-        const {username, password} = this.state
         return (
             <ScrollView style={styles.container}>
                 <View style={styles.content}>
-                    <Text>{this.state.userID}</Text>
                     <TextInput
                         placeholder='Username'
                         defaultValue='admin'
@@ -73,17 +65,6 @@ class LoginScreen extends Component {
                 </View>
             </ScrollView>
         )
-    }
-}
-
-const mapStateToProps = (state) => {
-    return {}
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        close: NavActions.pop,
-        attemptLogin: (username, password) => dispatch(Actions.attemptLogin(username, password))
     }
 }
 
@@ -120,7 +101,6 @@ var styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 1.5
     },
-})
+});
 
 export default LoginScreen
-//export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

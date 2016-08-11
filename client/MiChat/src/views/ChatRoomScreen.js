@@ -3,18 +3,11 @@ import {
     View,
     ScrollView,
     Text,
-    TextInput,
-    TouchableOpacity,
-    Image,
-    Keyboard,
-    LayoutAnimation,
     StyleSheet,
     ListView,
     TouchableHighlight
 } from 'react-native'
-import {connect} from 'react-redux'
 import {Actions as NavActions} from 'react-native-router-flux'
-import Button from 'apsl-react-native-button'
 import Colors from '../config/Colors'
 
 class ChatRoomScreen extends Component {
@@ -30,21 +23,22 @@ class ChatRoomScreen extends Component {
     render() {
         return (
             <ScrollView style={styles.container}>
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={(rowData) =>
-                            <TouchableHighlight
-                                underlayColor='green'
-                            onPress={() => {}}
-                            >
-                                <View style={styles.listItem}>
-                                    <View style={styles.listInfo}>
-                                        <Text style={styles.roomLabel}>{rowData}</Text>
-                                    </View>
+                <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(rowData) =>
+                        <TouchableHighlight
+                            underlayColor='green'
+                            onPress={() => {
+                            }}
+                        >
+                            <View style={styles.listItem}>
+                                <View style={styles.listInfo}>
+                                    <Text style={styles.roomLabel}>{rowData}</Text>
                                 </View>
-                            </TouchableHighlight>
-                        }
-                    />
+                            </View>
+                        </TouchableHighlight>
+                    }
+                />
             </ScrollView >
         )
     }

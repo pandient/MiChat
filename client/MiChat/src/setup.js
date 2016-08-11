@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import LoginScreen from './views/LoginScreen'
 import NavigationRouter from './NavigationRouter'
 
 function setup() {
