@@ -26,8 +26,14 @@ var login = function(host, port, userName, password, callback){
 			console.log(str);
 			callback(str);
 		});
+		
 	}
-	var req = http.request(options, cb).end();
+	var req = http.request(options, cb);
+	req.on('error', function(error) {
+		console.log(error);
+		callback({message: "error"})
+	});
+	req.end();
 }
 
 var findLoginService = function(callback, userName, password) {

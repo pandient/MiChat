@@ -30,11 +30,40 @@ module.exports = app;
 //register service to service registry sometime
 const querystring = require('querystring');
 const http = require("http");
+const os = require('os');
+
+var ifaces = os.networkInterfaces();
+var hostIP;
+
+Object.keys(ifaces).forEach(function (ifname) {
+  var alias = 0;
+
+  ifaces[ifname].forEach(function (iface) {
+    if ('IPv4' !== iface.family || iface.internal !== false) {
+      // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+      return;
+    }
+
+    if (alias >= 1) {
+      // this single interface has multiple ipv4 addresses
+      //console.log(ifname + ':' + alias, iface.address);
+    } else {
+      // this interface has only one ipv4 adress
+      //console.log(ifname, iface.address);
+	  if (ifname.indexOf('Local') > -1) {
+		hostIP = iface.address;
+	  }
+    }
+    ++alias;
+  });
+});
+
 var postData = querystring.stringify({
 	"name": "loginservices",
-	"host": "10.0.9.30",
+	"host": hostIP,
 	"port": "3002"
 });
+//options include hostname and port to service registry
 var options = {
 	hostname: "10.0.9.30",
 	port: 3001,
