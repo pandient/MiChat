@@ -5,20 +5,18 @@ var http = require('http');
 var services = {};
 
 exports.find = (req, res) => {
-  // microservice
-  // repond
   var name = req.param('name');
   
-  if(services[name] != null && services[name].length != 0){
-      res.json( {
-      location: services[name].slice(-1)[0] 
-       });
-     
+  if (services[name] != null && services[name].length != 0){
+	res.json( {
+		location: services[name].slice(-1)[0] 
+	});
   }
-   res.json( {
-         message: "no service online"
+  else {
+   res.json({
+	 message: "no service online"
    });
- 
+  }	
 };
 
 exports.add = (req, res) => {

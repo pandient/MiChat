@@ -16,8 +16,8 @@ app.get('/find', servicesController.find);
 app.post('/add', servicesController.add);
 app.post('/remove', servicesController.remove);
 
-app.listen(3000, function() {
-  console.log('main service listening on 3000')
+app.listen(3001, function() {
+  console.log('main service listening on 3001')
 })
 
 app.get('/', function(req, res) {
