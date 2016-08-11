@@ -1,7 +1,10 @@
 'use strict';
   var http = require('http');
  // var services = require('../services');
- var loginService = {};
+ 
+ //info for service registry
+ var host = "10.0.9.30";
+ var port = 3001;
 
 var login = function(host, port, userName, password, callback){
 	console.log(host + " " + port);
@@ -27,9 +30,8 @@ var login = function(host, port, userName, password, callback){
 	var req = http.request(options, cb).end();
 }
 
-var findLoginService = function(host, port, callback, userName, password) {
-	host = host? host : "10.0.9.30";
-	port = port? port : 3001;
+var findLoginService = function(callback, userName, password) {
+	//need to look at service registry to services
 	var options = {
 	  hostname: host,
 	  path: "/find?name=loginservices",
@@ -42,7 +44,7 @@ var findLoginService = function(host, port, callback, userName, password) {
 			str += chunk;
 		});
 		response.on('end', function() {
-			loginService = JSON.parse(str);
+			var loginService = JSON.parse(str);
 			var location = loginService.location;
 			console.log(loginService);
 			login(location["host"], location["port"], userName, password, callback);
@@ -59,7 +61,7 @@ exports.login = (req, res) => {
   var callback = function(obj) {
 	res.json(obj);
   };
-  findLoginService(null, null, callback, userName, password);
+  findLoginService(callback, userName, password);
 };
 
 
