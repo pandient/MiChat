@@ -3,7 +3,7 @@
 exports.sendMessage = (req, res) => {
   // microservice
   // repond
-  res.json( {
+  res.json({
     message: 'messagerecieved'
   });
 };
@@ -11,7 +11,7 @@ exports.sendMessage = (req, res) => {
 exports.getMessages = (req, res) => {
   // microservice
   // repond
-  res.json( {
+  res.json({
     messages: ["1"]
   });
 };

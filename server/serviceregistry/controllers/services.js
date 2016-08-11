@@ -6,17 +6,17 @@ var services = {};
 
 exports.find = (req, res) => {
   var name = req.param('name');
-  
-  if (services[name] != null && services[name].length != 0){
-	res.json( {
-		location: services[name].slice(-1)[0] 
-	});
+
+  if (services[name] != null && services[name].length != 0) {
+    res.json({
+      location: services[name].slice(-1)[0]
+    });
   }
   else {
-   res.json({
-	 message: "no service online"
-   });
-  }	
+    res.json({
+      message: "no service online"
+    });
+  }
 };
 
 exports.add = (req, res) => {
@@ -26,15 +26,15 @@ exports.add = (req, res) => {
   var host = req.body.host;
   var port = req.body.port;
   var location = {
-    "name" : name,
-    "host" : host,
-    "port" : port
+    "name": name,
+    "host": host,
+    "port": port
   }
-  if(services[name] == null){
+  if (services[name] == null) {
     services[name] = [];
-  } 
+  }
   services[name].push(location);
-  res.json( {
+  res.json({
     message: 'added services'
   });
 };
@@ -44,8 +44,8 @@ exports.remove = (req, res) => {
   // repond
   var name = req.body.name;
   var location = req.body.location;
-//  services[name].push(location);
-  res.json( {
+  //  services[name].push(location);
+  res.json({
     message: 'added services'
   });
 };

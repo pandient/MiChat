@@ -16,3 +16,10 @@ exports.getMessages = (req, res) => {
     messages: ["1"]
   });
 };
+
+exports.listOfRooms = (req, res) => {
+  // look in db for list of rooms - hardcoded
+  res.json( {
+    roomList: ["DDX","ZEMA","DM","Support","Data Delivery"]
+  });
+};

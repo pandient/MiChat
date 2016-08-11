@@ -14,8 +14,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'jade');
 
 
+
 app.get('/api', apiController.getApi);
 app.post('/login', loginController.login);
+app.get('/listofrooms', chatController.listOfRooms);
 app.post('/sendMessage', chatController.sendMessage);
 app.get('/getMessages', chatController.getMessages)
 

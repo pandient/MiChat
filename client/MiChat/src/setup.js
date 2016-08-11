@@ -1,13 +1,12 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import LoginScreen from './views/LoginScreen'
-import ChatRoomScreen from './views/ChatRoomScreen'
+import NavigationRouter from './NavigationRouter'
 
 function setup() {
   class Root extends React.Component {
     render() {
       return (
-        <ChatRoomScreen />
+        <NavigationRouter />
       );
     }
   }
