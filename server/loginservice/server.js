@@ -46,7 +46,7 @@ var options = {
 	}
 };
 var req = http.request(options, function(response) {
-	console.log("ok, i've requested");
+	console.log("ok, i've told the service registry");
 });
 
 req.on('error', function(err) {

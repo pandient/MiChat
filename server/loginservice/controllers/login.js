@@ -2,9 +2,10 @@
 
 
 exports.login = (req, res) => {
-  var userName = req.body.userName;
-  var password = req.body.password;
-  console.log("login from microservice");
+  var userName = req.param('userName');
+  var password = req.param('password');
+  //console.log("login from microservice");
+  console.log(userName + " " + password);
  // console.log(req);
   if(userName === 'admin' && password === 'password'){
     res.json( {
