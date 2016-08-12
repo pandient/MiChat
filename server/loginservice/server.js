@@ -6,7 +6,7 @@ const logger = require('morgan');
 
 //controller refs
 const loginController = require('./controllers/login');
-const MYPORT = 3007;
+const MYPORT = 3002;
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -34,7 +34,7 @@ const http = require("http");
 const os = require('os');
 
 var ifaces = os.networkInterfaces();
-var serviceRegistryIP = "localhost";
+var serviceRegistryIP = "10.0.9.30";
 var serviceRegistryPort = 3001;
 var hostIP;
 var hostPort = MYPORT; //set to null or some hardcoded value, but should get from container env

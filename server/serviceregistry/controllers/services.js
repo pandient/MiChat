@@ -4,11 +4,32 @@ var http = require('http');
 
 var services = {};
 
+function cleanServices() {
+	for (var name in services) {
+		if (services.hasOwnProperty(name)) {
+			if (services[name] == null) {
+				services[name] = [];
+			}
+
+			var copyArr = services[name].slice();
+			var currentTime = new Date();
+
+			for (var i = copyArr.length - 1; i >= 0; i--) {
+				var diff = currentTime - new Date(copyArr[i].inserttime);
+				if (diff > 5000) {
+					services[name] = services[name].splice(i, 1);
+				}
+			}
+		}
+		//console.log(JSON.stringify(services[name]));
+	}
+	setTimeout(cleanServices, 5000);
+};
+
+cleanServices();
+
 exports.find = (req, res) => {
   var name = req.param('name');
-
-
-
 
   if (services[name] != null && services[name].length != 0) {
     res.json({
@@ -28,22 +49,10 @@ exports.add = (req, res) => {
   var name = req.body.name;
   var host = req.body.host;
   var port = req.body.port;
-
+  
   if (services[name] == null) {
-    services[name] = [];
+	services[name] = [];
   }
-
-  var copyArr = services[name].slice();
-  var currentTime = new Date();
-
-  for (var i = copyArr.length - 1; i >= 0; i--) {
-    var diff = currentTime - new Date(copyArr[i].inserttime);
-    if (diff > 5000) {
-      services[name] = services[name].splice(i, 1);
-    }
-  }
-
-
 
   var location = {
     "name": name,
@@ -53,7 +62,7 @@ exports.add = (req, res) => {
   }
 
   services[name].push(location);
-  console.log("added to " + name + " " + JSON.stringify(services[name]));
+  //console.log("added to " + name + " " + JSON.stringify(services[name]));
   res.json({
     message: 'added services'
   });
