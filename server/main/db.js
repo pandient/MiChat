@@ -47,7 +47,7 @@ module.exports = {
         this.MessageModel.create({ message: message, user: user });
     },
     getConnection: function () {
-        mongoose.connect('mongodb://localhost/messages');
+        mongoose.connect('mongodb://wrk-it-126:27017/messages');
         if (this.db == null) {
             this.db = mongoose.connection;
         }

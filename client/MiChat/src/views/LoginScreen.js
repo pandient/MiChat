@@ -4,7 +4,9 @@ import {
     ScrollView,
     TextInput,
     StyleSheet,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    Text,
+    Platform
 } from 'react-native'
 import {Actions as NavActions} from 'react-native-router-flux'
 import Button from 'apsl-react-native-button'
@@ -18,22 +20,29 @@ class LoginScreen extends Component {
         this.state = {
             username: 'admin',
             password: 'password',
-            userID: null
+            userID: null,
+            errorMessage: null
         };
-        this.api = API.create()
+        this.api = API.create();
     }
 
     handleLoginPress() {
-        const {username, password} = this.state
+        const {username, password} = this.state;
         this.api.logIn(username, password).then(this.setUserID.bind(this));
     }
 
     setUserID(response) {
-        if (response.data.userid != null) {
+        var json = JSON.parse(response.data);
+        if (json.userid != null) {
             this.setState({
-                userID: response.data.userid,
+                userID: json.userid,
             });
-            NavActions.chatRoomScreen(this.state.userID)
+            NavActions.chatRoomScreen({userID: this.state.userID})
+        }
+        else if (json.message != null) {
+            this.setState({
+                errorMessage: json.message,
+            });
         }
     }
 
@@ -55,6 +64,7 @@ class LoginScreen extends Component {
                         onChangeText={(text) => this.setState({password: text})}
                         value={this.state.text}
                     />
+                    <Text>{this.state.errorMessage}</Text>
                     <Button
                         background={TouchableNativeFeedback.Ripple('#000000')}
                         style={styles.buttonStyle}
@@ -72,6 +82,7 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
+        marginTop: (Platform.OS === 'ios') ? 64 : 54
     },
     content: {
         flex: 1,
