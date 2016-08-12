@@ -12,7 +12,6 @@ import {
 import Colors from '../config/Colors'
 import dismissKeyboard from 'dismissKeyboard'
 import API from '../api/Api'
-import InvertibleScrollView from 'react-native-invertible-scroll-view';
 
 class ChatScreen extends Component {
 
@@ -20,6 +19,7 @@ class ChatScreen extends Component {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
+            intervalId: null,
             _scrollToBottomY: 0,
             messageList: [],
             message: '',
@@ -27,15 +27,19 @@ class ChatScreen extends Component {
             userID: this.props.userID
         };
         this.api = API.create();
-        this.updateMessages();
     }
 
     componentWillMount() {
         this.update();
+        this.updateMessages();
     }
 
     componentDidUpdate() {
        // this._scrollView.scrollTo({y:this.state._scrollToBottomY});
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.state.intervalId);
     }
 
     update() {
@@ -60,7 +64,9 @@ class ChatScreen extends Component {
     }
 
     updateMessages() {
-        setInterval(this.update.bind(this), 1000);
+        this.setState({
+            intervalId: setInterval(this.update.bind(this), 1000)
+        })
     }
 
     render() {
