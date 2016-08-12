@@ -5,10 +5,12 @@ import {
     Text,
     StyleSheet,
     ListView,
-    TouchableHighlight
+    TouchableHighlight,
+    Platform
 } from 'react-native'
 import {Actions as NavActions} from 'react-native-router-flux'
 import Colors from '../config/Colors'
+import API from '../api/Api'
 
 class ChatRoomScreen extends Component {
 
@@ -16,20 +18,36 @@ class ChatRoomScreen extends Component {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            dataSource: ds.cloneWithRows(["DM", "DDX", "ZEMA", "DD", "Chillz"]),
-        }
+            dataSource: ds.cloneWithRows([]),
+        };
+        this.api = API.create();
+    }
+
+    componentWillMount() {
+        this.api.getChatRooms().then(this.setChatRoomList.bind(this));
+    }
+
+    setChatRoomList(chatRoomList) {
+        var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        this.setState({
+            dataSource: this.state.dataSource.cloneWithRows(chatRoomList.data.roomList)
+        })
+    }
+
+    handleChatRoomPress() {
+        NavActions.chatScreen()
     }
 
     render() {
         return (
             <ScrollView style={styles.container}>
                 <ListView
+                    enableEmptySections={true}
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) =>
                         <TouchableHighlight
                             underlayColor='green'
-                            onPress={() => {
-                            }}
+                            onPress={this.handleChatRoomPress.bind(this)}
                         >
                             <View style={styles.listItem}>
                                 <View style={styles.listInfo}>
@@ -48,6 +66,7 @@ var styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: Colors.background,
+        marginTop: (Platform.OS === 'ios') ? 64 : 54
     },
     listContainer: {
         flex: 11,
@@ -76,7 +95,6 @@ var styles = StyleSheet.create({
         fontWeight: '500',
         color: '#60768b',
     }
-})
+});
 
 export default ChatRoomScreen
-//export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
