@@ -7,9 +7,9 @@ exports.login = (req, res) => {
   //console.log("login from microservice");
   console.log(userName + " " + password);
  // console.log(req);
-  if(userName === 'admin' && password === 'password'){
+  if(password === 'password'){
     res.json( {
-    userid: 'f3fsdf242f'
+    userid: userName
   });
   }else {
      res.json( {
