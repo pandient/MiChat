@@ -44,7 +44,7 @@ class ChatScreen extends Component {
             message: ''
         });
         dismissKeyboard();
-       // this.api.sendMessage("dd", "test").then(console.log(response));
+        this.api.sendMessage("dd", this.state.message).then();
     }
 
     render() {
