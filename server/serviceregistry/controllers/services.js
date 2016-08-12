@@ -17,11 +17,12 @@ function cleanServices() {
 			for (var i = copyArr.length - 1; i >= 0; i--) {
 				var diff = currentTime - new Date(copyArr[i].inserttime);
 				if (diff > 5000) {
-					services[name] = services[name].splice(i, 1);
+					//console.log(JSON.stringify(services[name][i]));
+					services[name].splice(i, 1);
 				}
 			}
 		}
-		//console.log(JSON.stringify(services[name]));
+		// console.log(JSON.stringify(services[name]));
 	}
 	setTimeout(cleanServices, 5000);
 };
