@@ -19,6 +19,7 @@ class ChatRoomScreen extends Component {
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
             dataSource: ds.cloneWithRows([]),
+            userID: this.props.userID
         };
         this.api = API.create();
     }
@@ -35,7 +36,7 @@ class ChatRoomScreen extends Component {
     }
 
     handleChatRoomPress() {
-        NavActions.chatScreen()
+        NavActions.chatScreen({userID: this.state.userID})
     }
 
     render() {

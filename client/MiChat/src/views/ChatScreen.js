@@ -12,6 +12,7 @@ import {
 import Colors from '../config/Colors'
 import dismissKeyboard from 'dismissKeyboard'
 import API from '../api/Api'
+import InvertibleScrollView from 'react-native-invertible-scroll-view';
 
 class ChatScreen extends Component {
 
@@ -19,14 +20,25 @@ class ChatScreen extends Component {
         super(props);
         var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
         this.state = {
-            messageList: [{user : 'karan', message: 'hey man sup'}, {user : 'guneet', message: 'just chilling man. wbu'}],
+            _scrollToBottomY: 0,
+            messageList: [],
             message: '',
             dataSource: ds.cloneWithRows([]),
+            userID: this.props.userID
         };
         this.api = API.create();
+        this.updateMessages();
     }
 
     componentWillMount() {
+        this.update();
+    }
+
+    componentDidUpdate() {
+       // this._scrollView.scrollTo({y:this.state._scrollToBottomY});
+    }
+
+    update() {
         this.api.getMessages().then(this.setChatMessages.bind(this));
     }
 
@@ -40,11 +52,15 @@ class ChatScreen extends Component {
 
     onSendPress() {
         this.setState({
-            messageList : [...this.state.messageList, {user: 'karan', message: this.state.message}],
+            messageList : [...this.state.messageList, {user: this.state.userID, message: this.state.message}],
             message: ''
         });
         dismissKeyboard();
-        this.api.sendMessage("dd", this.state.message).then();
+        this.api.sendMessage(this.state.userID, this.state.message).then();
+    }
+
+    updateMessages() {
+        setInterval(this.update.bind(this), 1000);
     }
 
     render() {
@@ -67,11 +83,14 @@ class ChatScreen extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.chatContainer}>
-                    <ScrollView
-                        ref={(c) => this._scrollView = c}
+                    <ScrollView style={{flex:1}}
+                        ref={(ref) => this._scrollView = ref}
                         onScroll={()=>{}}
                         scrollEventThrottle={16}
-                        onContentSizeChange={(e) => {}}
+                        showsVerticalScrollIndicator={false}
+                        onContentSizeChange={(newSize)=>{
+                            this.setState({_scrollToBottomY: newSize})
+                        }}
                     >
                         {list}
                     </ScrollView>
@@ -109,7 +128,7 @@ var styles = StyleSheet.create({
         flex: 11,
         marginTop: 10,
         justifyContent: 'center',
-        alignItems: 'stretch'
+        alignItems: 'stretch',
     },
     messageContainer: {
 
