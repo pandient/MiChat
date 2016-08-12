@@ -23,7 +23,7 @@ app.get('/listofrooms', chatController.listOfRooms);
 app.post('/sendMessage', chatController.sendMessage);
 app.get('/getMessages', chatController.getMessages)
 
-app.listen(3001, function () {
+app.listen(3000, function () {
   console.log('main service listening on 3000')
 })
 

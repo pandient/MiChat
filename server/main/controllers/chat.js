@@ -7,11 +7,17 @@ exports.sendMessage = (req, res) => {
   // repond
   var user = req.body.user;
   var message = req.body.message;
-  db.sendMessage(user,message);
+  if (!user || !message) {
+	res.json({message: "invalid user or message"});
+  }
+  else {
+    db.sendMessage(user,message);
 
-  res.json({
-    message: 'messagerecieved'
-  });
+    res.json({
+	  message: 'messagerecieved'
+    });
+  }
+  
 };
 
 exports.getMessages = (req, res) => {
