@@ -1,6 +1,6 @@
 import apisauce from 'apisauce'
 
-const create = (baseURL = 'http://10.0.1.99:3000') => {
+const create = (baseURL = 'http://192.75.240.58:3000') => {
     const api = apisauce.create({
         baseURL,
         timeout: 10000
