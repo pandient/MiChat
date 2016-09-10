@@ -32,7 +32,7 @@ class LoginScreen extends Component {
     }
 
     setUserID(response) {
-        var json = JSON.parse(response.data);
+        var json = response.data;//JSON.parse(response.data);
         if (json.userid != null) {
             this.setState({
                 userID: json.userid,
